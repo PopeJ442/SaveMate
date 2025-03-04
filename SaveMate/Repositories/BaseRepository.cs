@@ -10,6 +10,7 @@ namespace SaveMate.Repositories
         protected readonly SaveMateDbContext _context;
         private readonly DbSet<T> _dbSet;
 
+
         public BaseRepository(SaveMateDbContext context)
         {
             _context = context;
