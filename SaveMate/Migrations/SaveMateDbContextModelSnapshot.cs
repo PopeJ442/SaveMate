@@ -49,7 +49,7 @@ namespace SaveMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("accounts");
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("SaveMate.Models.AccountCustomType", b =>
@@ -74,7 +74,7 @@ namespace SaveMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("accountCustomTypes");
+                    b.ToTable("AccountCustomTypes");
                 });
 
             modelBuilder.Entity("SaveMate.Models.Budget", b =>
@@ -109,7 +109,7 @@ namespace SaveMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("budgets");
+                    b.ToTable("Budgets");
                 });
 
             modelBuilder.Entity("SaveMate.Models.Category", b =>
@@ -131,7 +131,7 @@ namespace SaveMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("categories");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("SaveMate.Models.Goal", b =>
@@ -165,7 +165,7 @@ namespace SaveMate.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("goals");
+                    b.ToTable("Goals");
                 });
 
             modelBuilder.Entity("SaveMate.Models.Transaction", b =>
@@ -202,7 +202,7 @@ namespace SaveMate.Migrations
 
                     b.HasIndex("AccountId1");
 
-                    b.ToTable("transactions");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("SaveMate.Models.User", b =>
@@ -229,7 +229,7 @@ namespace SaveMate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("SaveMate.Models.Account", b =>
