@@ -166,3 +166,4 @@ C:\Users\POPE\Documents\C#\SaveMate\SaveMate\obj\Debug\net8.0\refint\SaveMate.dl
 C:\Users\POPE\Documents\C#\SaveMate\SaveMate\obj\Debug\net8.0\SaveMate.pdb
 C:\Users\POPE\Documents\C#\SaveMate\SaveMate\obj\Debug\net8.0\SaveMate.genruntimeconfig.cache
 C:\Users\POPE\Documents\C#\SaveMate\SaveMate\obj\Debug\net8.0\ref\SaveMate.dll
+C:\Users\POPE\Documents\C#\SaveMate\SaveMate\obj\Debug\net8.0\SaveMate.sourcelink.json
