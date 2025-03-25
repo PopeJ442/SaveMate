@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SaveMate.ApplicationDbContext;
 using SaveMate.Models;
+using SaveMate.Repositories.IRepository;
 using System;
 
 namespace SaveMate.Repositories
