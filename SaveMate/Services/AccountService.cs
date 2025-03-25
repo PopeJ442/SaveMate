@@ -1,5 +1,6 @@
 ﻿using SaveMate.Models;
-using SaveMate.Repositories;
+using SaveMate.Repositories.IRepository;
+using SaveMate.Services.IService;
 
 namespace SaveMate.Services
 {
