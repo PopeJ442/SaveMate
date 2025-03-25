@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SaveMate.ApplicationDbContext;
+using SaveMate.Repositories.IRepository;
 using System;
 using System.Runtime.InteropServices;
 
