@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SaveMate.ApplicationDbContext;
 using SaveMate.Repositories;
+using SaveMate.Repositories.IRepository;
 using SaveMate.Services;
+using SaveMate.Services.IService;
 
 
 
