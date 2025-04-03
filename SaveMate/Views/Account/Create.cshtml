@@ -5,18 +5,15 @@
 }
 
 <h2>Create Account</h2>
- 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="UserId" class="control-label"></label>
-        <input asp-for="UserId" class="form-control" />
-        <span asp-validation-for="UserId" class="text-danger"></span>
-    </div>
 
+<form asp-action="Create" method="post">
+    <div>
+        <label class="control-label"> AccountId</label>
+    </div>
     <!-- Predefined Account Type Dropdown -->
     <div class="form-group">
-        <label class="control-label">Predefined Account Type</label>
-        <select asp-for="PredefinedType" class="form-control">
+        <label class="control-label"> Account Type</label>
+        <select asp-for="PredefinedType" class="form-control" id="predefinedType">
             <option value="">Select an account type...</option>
             @foreach (var type in ViewBag.PredefinedTypes)
             {
@@ -26,9 +23,9 @@
         <span asp-validation-for="PredefinedType" class="text-danger"></span>
     </div>
 
-    <!-- Custom Account Type Input -->
-    <div class="form-group">
-        <label asp-for="CustomType.TypeName" class="control-label">Custom Account Type</label>
+    <!-- Custom Account Type Input (Initially Hidden) -->
+    <div class="form-group" id="customTypeGroup" style="display: none;">
+        <label asp-for="CustomType.TypeName" class="control-label">Input Account Type</label>
         <input asp-for="CustomType.TypeName" class="form-control" />
         <span asp-validation-for="CustomType.TypeName" class="text-danger"></span>
     </div>
@@ -42,3 +39,20 @@
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var predefinedTypeSelect = document.getElementById("predefinedType");
+            var customTypeGroup = document.getElementById("customTypeGroup");
+
+            predefinedTypeSelect.addEventListener("change", function () {
+                if (predefinedTypeSelect.value === "Others") {
+                    customTypeGroup.style.display = "block";
+                } else {
+                    customTypeGroup.style.display = "none";
+                }
+            });
+        });
+    </script>
+}
