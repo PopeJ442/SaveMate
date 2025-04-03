@@ -16,6 +16,9 @@ namespace SaveMate.IoC
          
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddScoped<IAccountService, AccountService>();
+
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
         }
         public static void AddingDbContext(IConfiguration configuration,IServiceCollection service) 
         {
