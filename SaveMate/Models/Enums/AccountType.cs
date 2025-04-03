@@ -9,6 +9,6 @@
         Investment,
         Wallet,
         Business,
-        
+        Others
     }
 }
