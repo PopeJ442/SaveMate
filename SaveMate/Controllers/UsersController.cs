@@ -8,29 +8,30 @@ using Microsoft.EntityFrameworkCore;
 using SaveMate.ApplicationDbContext;
 using SaveMate.Models;
 using SaveMate.Repositories.IRepository;
+using SaveMate.Services.IService;
 
 namespace SaveMate.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public UsersController(IUserRepository userRepository)
+        public UsersController(IUserService userRepository)
         {
-            _userRepository = userRepository;
+            _userService = userRepository;
         }
 
         // GET: Users
         public async Task<IActionResult> Index()
         {
-          var users= await _userRepository.GetAllAsync();
+            var users = await _userService.GetAllUsers();
             return View(users);
         }
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var user = await _userRepository.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id);
                 
             
             return View(user);
@@ -43,31 +44,25 @@ namespace SaveMate.Controllers
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,DateOfBirth,CreatedAt")] User user)
         {
             if (ModelState.IsValid)
             {
-                _userRepository.AddAsync(user);
-                user.CreatedAt  = DateTime.UtcNow;
-                await _userRepository.SaveAsync();
+                user.CreatedAt = DateTime.UtcNow;
+             await _userService.AddAsync(user);
+             
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
         }
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var user = await _userRepository.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -85,8 +80,9 @@ namespace SaveMate.Controllers
             {
                 try
                 {
-                  await _userRepository.UpdateAsync(user);
-                    await _userRepository.SaveAsync();
+                  await _userService.UpdateAsync(user);
+                    await _userService.SaveChanges();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -105,14 +101,11 @@ namespace SaveMate.Controllers
         }
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+           
 
-            var user = await _userRepository.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id);
                
             if (user == null) return NotFound();
 
@@ -123,19 +116,18 @@ namespace SaveMate.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(User user)
         {
-            var user = await _userRepository.GetByIdAsync(id);
-           await _userRepository.DeleteAsync(user);
+          
+            await _userService.DeleteAsync(user.UserId);
 
-            await _userRepository.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
 
         
         private  bool UserExists(int id)
         {
-             return _userRepository.GetByIdAsync(id) != null;
+             return _userService.GetByIdAsync(id) != null;
         }
 
     }
