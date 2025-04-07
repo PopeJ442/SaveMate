@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using SaveMate.ApplicationDbContext;
+using SaveMate.Models;
 using SaveMate.Repositories.IRepository;
 using System;
 using System.Runtime.InteropServices;
@@ -40,19 +42,23 @@ namespace SaveMate.Repositories
             await SaveAsync();
         }
 
-        public async Task DeleteAsync(object id)
-        {
-            var entity = await _dbSet.FindAsync(id);
-            if (entity != null)
-            {
-                _dbSet.Remove(entity);
-                await SaveAsync();
-            }
-        }
 
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteAsync(object id)
+        {
+            var entity = await _dbSet.FindAsync(id);
+            if (entity != null) 
+            {
+            _dbSet.Remove(entity);
+                await SaveAsync();
+            }
+           
+        }
+        
     }
 }
+
