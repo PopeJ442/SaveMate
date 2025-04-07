@@ -15,9 +15,14 @@ namespace SaveMate.Services
            return userRepository.AddAsync(user);
         }
 
-         public  Task DeleteAsync(int id)
+         public  Task DeleteAsync(User user)
         {
-           return userRepository.DeleteAsync(id);
+           return userRepository.DeleteAsync(user);
+        }
+
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<User> GetByIdAsync(int id)
@@ -25,7 +30,7 @@ namespace SaveMate.Services
            return userRepository.GetByIdAsync(id);
         }
 
-        public Task<IEnumerable<User>> GetUsersByUserIdAsync(int userId)
+        public Task<IEnumerable<User>> GetAllUsers()
         {
           return userRepository.GetAllAsync();
         }
@@ -34,5 +39,11 @@ namespace SaveMate.Services
         {
             return userRepository.UpdateAsync(user);
         }
+
+        public Task SaveChanges()
+        {
+            return userRepository.SaveAsync();
+        }
     }
+
 }
