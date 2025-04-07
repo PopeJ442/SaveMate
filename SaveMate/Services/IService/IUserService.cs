@@ -7,9 +7,10 @@ namespace SaveMate.Services.IService
     public interface IUserService 
     {
         Task<User> GetByIdAsync(int id);
-        Task<IEnumerable<User>> GetUsersByUserIdAsync(int userId);
+        Task<IEnumerable<User>> GetAllUsers();
         Task AddAsync(User user);
         Task UpdateAsync(User user);
         Task DeleteAsync(int id);
+        Task SaveChanges();
     }
 }
