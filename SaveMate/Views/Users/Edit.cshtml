@@ -5,7 +5,8 @@
 }
 
 <h1>Edit</h1>
-<a asp-action="Create" asp-controller="Account">Create Account </a>
+
+<a asp-controller="Account" asp-action="Create" asp-route-id="@Model.UserId" class="btn btn-primary">Create Account</a>
 
 <h4>User</h4>
 <hr />
