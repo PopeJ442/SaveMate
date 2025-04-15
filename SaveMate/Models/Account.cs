@@ -1,4 +1,5 @@
-﻿using SaveMate.Models.Enums;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using SaveMate.Models.Enums;
 
 namespace SaveMate.Models
 {
@@ -7,12 +8,13 @@ namespace SaveMate.Models
         public Guid AccountId { get; set; } = Guid.NewGuid(); 
 
         public int UserId { get; set; }
-        public User User { get; set; }
 
-        public AccountType? PredefinedType { get; set; }
+        [ValidateNever]
+        public User? User { get; set; }
 
-        public int? CustomTypeId { get; set; }
-        public  AccountCustomType CustomType { get; set; } 
+        public AccountType PredefinedType { get; set; }
+
+     
 
         public decimal Balance { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
