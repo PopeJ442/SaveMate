@@ -34,18 +34,14 @@ namespace SaveMate.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CustomTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PredefinedType")
-                        .HasColumnType("int");
+                    b.Property<string>("PredefinedType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("AccountId");
-
-                    b.HasIndex("CustomTypeId");
 
                     b.HasIndex("UserId");
 
@@ -234,17 +230,11 @@ namespace SaveMate.Migrations
 
             modelBuilder.Entity("SaveMate.Models.Account", b =>
                 {
-                    b.HasOne("SaveMate.Models.AccountCustomType", "CustomType")
-                        .WithMany()
-                        .HasForeignKey("CustomTypeId");
-
                     b.HasOne("SaveMate.Models.User", "User")
                         .WithMany("Accounts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("CustomType");
 
                     b.Navigation("User");
                 });
