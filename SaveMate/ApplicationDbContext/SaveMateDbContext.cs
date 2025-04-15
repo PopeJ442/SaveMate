@@ -12,6 +12,13 @@ namespace SaveMate.ApplicationDbContext
         public DbSet<Goal> Goals { get; set; }
         public DbSet<Budget> Budgets { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        
+
+        protected  override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Account>()
+                .Property(a => a.PredefinedType)
+                .HasConversion<string>();
+        }
+
     }
 }
