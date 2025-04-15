@@ -1,17 +1,13 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SaveMate.Models;
 using SaveMate.Models.Enums;
-using SaveMate.Repositories;
-using SaveMate.Services;
+using SaveMate.Models;
 using SaveMate.Services.IService;
 
 namespace SaveMate.Controllers
 {
     public class AccountController : Controller
     {
-
         private readonly IAccountService _accountService;
         private readonly IUserService _userService;
 
@@ -23,9 +19,16 @@ namespace SaveMate.Controllers
         }
 
 
-        public async Task<IActionResult> Index(int userId)
+        public async Task<IActionResult> Index(int id)
         {
-            var accounts = await _accountService.GetAccountsByUserIdAsync(userId);
+            var account = new Account 
+            {
+            UserId = id,
+            
+            };
+            var accounts = await _accountService.GetAccountsByUserIdAsync(id);
+            var users = await _userService.GetAllUsers();
+
             return View(accounts);
         }
 
@@ -40,48 +43,56 @@ namespace SaveMate.Controllers
 
         public IActionResult Create(int id)
         {
-            //userService.
-
-
             var account = new Account
             {
-
-                CustomType = new AccountCustomType()
+                UserId = id,
 
             };
 
-
             ViewBag.PredefinedTypes = Enum.GetValues(typeof(AccountType))
                                  .Cast<AccountType>()
-                                 .Select(t => new SelectListItem { Value = t.ToString(), Text = t.ToString() })
+                                 .Select(t => new SelectListItem { Value = t.ToString(), Text = t.ToString(), })
                                  .ToList();
-            return View();
-        }
 
+            return View(account);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Account account)
         {
-
-
             if (!ModelState.IsValid)
             {
-                account.AccountId = Guid.NewGuid();
+                foreach (var entry in ModelState)
+                {
+                    var key = entry.Key;
+                    var errors = entry.Value.Errors;
+                    foreach (var error in errors)
+                    {
+                        Console.WriteLine($"Key: {key}, Error: {error.ErrorMessage}");
+                    }
+                }
+
+
                 return View(account);
             }
 
             try
             {
                 await _accountService.AddAsync(account);
-                return RedirectToAction(nameof(Index), new { userId = account.UserId });
+                return RedirectToAction("Index", "Account", new { id = account.UserId });
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
+                ViewBag.PredefinedTypes = Enum.GetValues(typeof(AccountType))
+                                     .Cast<AccountType>()
+                                     .Select(t => new SelectListItem { Value = t.ToString(), Text = t.ToString() })
+                                     .ToList();
                 return View(account);
             }
         }
+
 
 
         public async Task<IActionResult> Edit(Guid id)
@@ -129,8 +140,9 @@ namespace SaveMate.Controllers
         {
             try
             {
+                var account = await _accountService.GetByIdAsync(id);
                 await _accountService.DeleteAsync(id);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { userId = account.UserId });
             }
             catch (Exception ex)
             {
@@ -138,6 +150,6 @@ namespace SaveMate.Controllers
                 return View();
             }
         }
-    }
 
+    }
 }
