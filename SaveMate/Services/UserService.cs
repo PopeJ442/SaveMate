@@ -15,14 +15,10 @@ namespace SaveMate.Services
            return userRepository.AddAsync(user);
         }
 
-         public  Task DeleteAsync(User user)
-        {
-           return userRepository.DeleteAsync(user);
-        }
-
+       
         public Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            return userRepository.DeleteAsync(id);
         }
 
         public Task<User> GetByIdAsync(int id)

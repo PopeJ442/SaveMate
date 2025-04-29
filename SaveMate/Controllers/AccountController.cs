@@ -61,6 +61,7 @@ namespace SaveMate.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Account account)
         {
+
             if (!ModelState.IsValid)
             {
                 foreach (var entry in ModelState)
@@ -85,6 +86,7 @@ namespace SaveMate.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
+                ViewBag.ErrorMessage = ex.Message;
                 ViewBag.PredefinedTypes = Enum.GetValues(typeof(AccountType))
                                      .Cast<AccountType>()
                                      .Select(t => new SelectListItem { Value = t.ToString(), Text = t.ToString() })

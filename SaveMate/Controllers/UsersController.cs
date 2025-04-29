@@ -5,20 +5,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using SaveMate.ApplicationDbContext;
 using SaveMate.Models;
+using SaveMate.Repositories;
 using SaveMate.Repositories.IRepository;
+using SaveMate.Services;
 using SaveMate.Services.IService;
+using SaveMate.ViewModel;
 
 namespace SaveMate.Controllers
 {
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
 
-        public UsersController(IUserService userRepository)
+        public UsersController(IUserService userRepository, IAccountService accountService)
         {
             _userService = userRepository;
+            _accountService = accountService;
         }
 
         // GET: Users
@@ -31,10 +37,18 @@ namespace SaveMate.Controllers
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var user = await _userService.GetByIdAsync(id);
-                
             
-            return View(user);
+            var user = await _userService.GetByIdAsync(id);
+            var accounts = await _accountService.GetAccountsByUserIdAsync(id);
+
+            var viewmodel = new UserAccountViewModel
+            {
+                user  = user,
+                account = accounts
+            
+            
+            };
+            return View(viewmodel);
         }
 
         // GET: Users/Create

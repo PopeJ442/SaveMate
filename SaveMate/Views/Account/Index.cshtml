@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Account>
+
+@{
+    ViewData["Title"] = "Index Page";
+    var userId = Model.FirstOrDefault()?.UserId ?? 0;
+    
+}
+
+<h2>User Accounts</h2>
+<input type="hidden" asp-for="@userId">
+<table class="table">
+    <thead>
+        <tr>
+            <th>Account Type</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in Model)
+        {
+            <tr>
+                <td>@(account.PredefinedType)</td>
+                <td>@account.Balance.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@* 
+<form method="get" asp-action="Index">
+    <label>Select User:</label>
+    <select name="id" class="form-control">
+          @foreach (var user in ViewBag.Users)
+        {
+         
+
+<option value="@user.Id" selected>@user.Name</option>
+        }
+    </select>
+    <button type="submit" class="btn btn-primary">View Accounts</button>
+</form>
+ *@

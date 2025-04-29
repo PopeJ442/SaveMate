@@ -15,7 +15,7 @@ namespace SaveMate.Services
         public async Task AddAsync(Account account)
         {
             var userAccounts = await _accountRepository.GetAccountsByUserIdAsync(account.UserId);
-            if (userAccounts.Count() >= 8)
+            if (userAccounts.Count() >= 5)
             {
                 throw new Exception("A user cannot have more than 5 accounts.");
                Console.WriteLine("A user cannot have more than 5 accounts.");
