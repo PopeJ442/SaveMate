@@ -172,16 +172,13 @@ namespace SaveMate.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("AccountId1")
+                    b.Property<Guid>("AccountId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("Category")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -196,7 +193,7 @@ namespace SaveMate.Migrations
 
                     b.HasKey("TransactionId");
 
-                    b.HasIndex("AccountId1");
+                    b.HasIndex("AccountId");
 
                     b.ToTable("Transactions");
                 });
@@ -291,9 +288,13 @@ namespace SaveMate.Migrations
 
             modelBuilder.Entity("SaveMate.Models.Transaction", b =>
                 {
-                    b.HasOne("SaveMate.Models.Account", null)
+                    b.HasOne("SaveMate.Models.Account", "Account")
                         .WithMany("Transactions")
-                        .HasForeignKey("AccountId1");
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("SaveMate.Models.Account", b =>
