@@ -6,10 +6,8 @@ using System;
 
 namespace SaveMate.Repositories
 {
-    public class AccountRepository : BaseRepository<Account>, IAccountRepository
-    {
-        public AccountRepository(SaveMateDbContext context) : base(context) { }
-
+    public class AccountRepository(SaveMateDbContext context) : BaseRepository<Account>(context), IAccountRepository
+    { 
         public async Task<IEnumerable<Account>> GetAccountsByUserIdAsync(int userId)
         {
             return await _context.Accounts.Where(a => a.UserId == userId).ToListAsync();
