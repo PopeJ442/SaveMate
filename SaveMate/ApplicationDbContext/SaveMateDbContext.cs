@@ -13,11 +13,15 @@ namespace SaveMate.ApplicationDbContext
         public DbSet<Budget> Budgets { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
 
-        protected  override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>()
                 .Property(a => a.PredefinedType)
                 .HasConversion<string>();
+
+            //modelBuilder.Entity<Transaction>()
+            //.Property(t => t.Category)
+            //.HasConversion<string>();
         }
 
     }
