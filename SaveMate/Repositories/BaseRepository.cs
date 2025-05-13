@@ -8,19 +8,12 @@ using System.Runtime.InteropServices;
 
 namespace SaveMate.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public class BaseRepository<T>(SaveMateDbContext context) : IBaseRepository<T> where T : class
     {
-        protected readonly SaveMateDbContext _context;
-        private readonly DbSet<T> _dbSet;
+        protected readonly SaveMateDbContext _context = context;
+        private readonly DbSet<T> _dbSet = context.Set<T>();
 
-
-        public BaseRepository(SaveMateDbContext context)
-        {
-            _context = context;
-            _dbSet = context.Set<T>();
-        }
-
-         public async Task<T> GetByIdAsync(object id)
+        public async Task<T> GetByIdAsync(object id)
         {
             return await _dbSet.FindAsync(id);
         }
