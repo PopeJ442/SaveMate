@@ -16,6 +16,10 @@ namespace SaveMate.IoC
          
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddScoped<IAccountService, AccountService>();
+            
+            services.AddTransient<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ITransactionService, TransactionService>();
+
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
